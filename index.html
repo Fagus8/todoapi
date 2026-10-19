@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>დავალებების მენეჯერი</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>დავალებების მენეჯერი</h1>
+            <!-- მიმდინარე თარიღი და დრო (Date + setInterval) -->
+            <div id="clock" class="clock"></div>
+        </header>
+
+        <!-- დავალების დამატების ფორმა -->
+        <form id="task-form" class="task-form" novalidate>
+            <div class="form-row">
+                <input type="text" id="task-input" placeholder="ჩაწერე ახალი დავალება..." maxlength="100">
+            </div>
+            <div class="form-row">
+                <select id="priority-input" title="პრიორიტეტი">
+                    <option value="">-- პრიორიტეტი --</option>
+                    <option value="high">მაღალი</option>
+                    <option value="medium">საშუალო</option>
+                    <option value="low">დაბალი</option>
+                </select>
+                <input type="date" id="due-input" title="შესრულების ვადა">
+                <button type="submit" id="add-btn">დამატება</button>
+            </div>
+            <!-- ვალიდაციის შეცდომა -->
+            <div id="form-error" class="error-msg hidden"></div>
+        </form>
+
+        <!-- ძიება, ფილტრაცია, სორტირება -->
+        <div class="toolbar">
+            <input type="search" id="search-input" placeholder="ძიება...">
+            <select id="filter-select" title="ფილტრი">
+                <option value="all">ყველა</option>
+                <option value="active">შეუსრულებელი</option>
+                <option value="completed">შესრულებული</option>
+            </select>
+            <select id="sort-select" title="სორტირება">
+                <option value="newest">ჯერ ახალი</option>
+                <option value="oldest">ჯერ ძველი</option>
+                <option value="az">ანბანით (ა-ჰ)</option>
+                <option value="priority">პრიორიტეტით</option>
+                <option value="due">ვადით</option>
+            </select>
+        </div>
+
+        <!-- დავალებების სია -->
+        <ul id="task-list"></ul>
+
+        <!-- ცარიელი სიის შეტყობინება -->
+        <div id="empty-state" class="empty-state hidden">დავალებები არ არის!</div>
+
+        <!-- სტატისტიკის ბლოკი -->
+        <div class="stats-container">
+            <div class="stat-box">
+                <span class="stat-title">სულ:</span>
+                <span id="total-count">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-title">შესრულებული:</span>
+                <span id="completed-count">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-title">დარჩენილი:</span>
+                <span id="pending-count">0</span>
+            </div>
+        </div>
+        <button id="clear-btn" class="clear-btn">ყველას წაშლა</button>
+
+        <!-- API-დან მიღებული დავალებები (Fetch API) -->
+        <section class="api-section">
+            <div class="api-header">
+                <h2>სერვერიდან მიღებული დავალებები</h2>
+                <button id="reload-api-btn" class="secondary-btn">განახლება</button>
+            </div>
+            <div id="loader" class="loader hidden">იტვირთება მონაცემები...</div>
+            <div id="api-error" class="error-msg hidden"></div>
+            <ul id="api-list"></ul>
+        </section>
+    </div>
+
+    <!-- შეტყობინება (Toast), რომელიც setTimeout-ით ქრება -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- სკრიპტები ჩვეულებრივად (არა module), რომ file://-დან გახსნისასაც იმუშაოს -->
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
